@@ -39,7 +39,17 @@ module.exports = {
   },
   getProductContent: (content, callback) => {
     db.query(
-      `select IFNULL(*,"") from generic where generic=?`,
+      `select
+        IFNULL(ID,""),
+        IFNULL(generic,""),
+        IFNULL(dosage,""),
+        IFNULL(CONTRAINDICATION,""),
+        IFNULL(SPECIAL_PRECAUTIONS,""),
+        IFNULL(INTERACTION,""),
+        IFNULL(ADVERSE_DRUG_REACTION,""),
+        IFNULL(PREGNANCY_CTG,""),
+        IFNULL(LACTATION,"")
+        from generic where generic=?`,
       [content],
       (error, results, fields) => {
         if (error) {
