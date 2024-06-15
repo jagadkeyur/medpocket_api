@@ -39,7 +39,7 @@ module.exports = {
   },
   getProductContent: (content, callback) => {
     db.query(
-      `select * from generic where generic=?`,
+      `select IFNULL(*,"") from generic where generic=?`,
       [content],
       (error, results, fields) => {
         if (error) {
