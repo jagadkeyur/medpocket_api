@@ -59,7 +59,7 @@ module.exports = {
   },
   stockiestFromCompany: (query, city, callback) => {
     //
-    var queryString = `SELECT * FROM crossreference WHERE COMPANY_NAME=? and CENTER=?`;
+    var queryString = `SELECT * FROM crossreference WHERE COMPANY_NAME=? and CENTER=? GROUP BY FIRM_NAME`;
 
     db.query(queryString, [query, city], (error, results, fields) => {
       if (error) {
@@ -83,9 +83,9 @@ module.exports = {
 
         results = results.length
           ? results.filter(
-            (arr, index, self) =>
-              index === self.findIndex((t) => t.FIRM_NAME === arr.FIRM_NAME)
-          )
+              (arr, index, self) =>
+                index === self.findIndex((t) => t.FIRM_NAME === arr.FIRM_NAME)
+            )
           : [];
         return callback(null, results || null);
       }
