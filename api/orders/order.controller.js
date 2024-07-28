@@ -1,3 +1,5 @@
+const { sendPushNotification } = require("../admin/admin.service");
+const { getUserById } = require("../users/user.service");
 const {
   generateOrder,
   getOrders,
@@ -98,9 +100,33 @@ module.exports = {
         async (error, response, fields) => {
           response = response ? JSON.parse(JSON.stringify(response)) : null;
           if (response) {
-            res
-              .status(200)
-              .json({ status: 1, message: "success", data: response });
+            getOrderById(req.params.orderId, (errOrder, resOrder) => {
+              const { user_id = 0 } = resOrder?.[0] || {};
+              getUserById(user_id, (errUser, resUser) => {
+                const { fcm_token = "" } = resUser || {};
+                if (fcm_token) {
+                  sendPushNotification(
+                    [fcm_token],
+                    "Order Updated",
+                    `Order No. ${req.params.orderId}`,
+                    async (er, response) => {
+                      // if (er) res.status(500).json({ status: 0, message: er });
+                      // else
+                      res
+                        .status(200)
+                        .json({ status: 1, message: "success", data: null });
+                    }
+                  );
+                } else {
+                  res
+                    .status(200)
+                    .json({ status: 1, message: "success", data: null });
+                }
+              });
+            });
+            // res
+            //   .status(200)
+            //   .json({ status: 1, message: "success", data: response });
           } else {
             res.status(500).json({ status: 0, message: error });
           }

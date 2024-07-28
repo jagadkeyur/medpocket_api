@@ -303,6 +303,8 @@ module.exports = {
   updateUserById: (body, id, callback) => {
     delete body["id"];
     delete body["created_at"];
+    delete body["uploaded_stockiests"];
+    delete body["uploaded_products"];
     const data = [];
     Object.keys(body).map((key) => {
       if (key != "id") data.push(`${key}=?`);

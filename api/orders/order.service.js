@@ -82,7 +82,7 @@ module.exports = {
   updateOrderById: (body, id, callback) => {
     const data = Object.keys(body).map((key) => `${key}=?`);
     db.query(
-      `update order_master set ${data.join(", ")} where id=?`,
+      `update order_master set ${data.join(", ")} where order_id=?`,
       [...Object.values(body), id],
       (error, results, fields) => {
         if (error) {
