@@ -25,6 +25,7 @@ const {
   downloadData,
   getGeneralUsers,
   addGeneralUsers,
+  deleteNews,
 } = require("./admin.service");
 
 require("dotenv").config();
@@ -375,6 +376,22 @@ module.exports = {
               res.status(500).json({ status: 0, message: err });
             }
           });
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ status: 0, message: error });
+    }
+  },
+  deleteNews: async (req, res) => {
+    try {
+      deleteNews(req.params.id, async (error, response) => {
+        response = response ? JSON.parse(JSON.stringify(response)) : null;
+        if (response) {
+          res
+            .status(200)
+            .json({ status: 1, message: "success", data: response });
+        } else {
+          res.status(500).json({ status: 0, message: error });
         }
       });
     } catch (error) {

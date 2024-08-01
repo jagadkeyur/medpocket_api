@@ -499,6 +499,18 @@ module.exports = {
       }
     );
   },
+  deleteNews: (id, callback) => {
+    db.query(
+      `delete from news where id=?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          callback(error);
+        }
+        return callback(null, results || null);
+      }
+    );
+  },
   getGeneralUsers: (callback) => {
     const role = "user";
     db.query(
