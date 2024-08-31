@@ -15,19 +15,12 @@ const db = require("../../config/db.config");
 //   return arr;
 // };
 
-const formatQuery = (query) => {
-  return query
-    .split(" ")
-    .map((q) => `+${q}`)
-    .join(" ");
-};
-
 module.exports = {
   searchCompany: (query, callback) => {
     db.query(
       `select * from products WHERE MATCH(COM_FULL) AGAINST(? IN BOOLEAN MODE) group by COM_FULL`,
       // `select * from products where (COM_FULL LIKE CONCAT('%',?,'%')) group by COM_FULL`,
-      [formatQuery(query)],
+      [query],
       (error, results, fields) => {
         if (error) {
           callback(error);
@@ -41,21 +34,17 @@ module.exports = {
     //
     var queryString = `select * from crossreference where COMPANY_NAME LIKE CONCAT(?, '%') and CENTER=?`;
 
-    db.query(
-      queryString,
-      [formatQuery(query), city],
-      (error, results, fields) => {
-        if (error) {
-          callback(error);
-        }
-
-        results = results.filter(
-          (arr, index, self) =>
-            index === self.findIndex((t) => t.COMPANY_NAME === arr.COMPANY_NAME)
-        );
-        return callback(null, results || null);
+    db.query(queryString, [query, city], (error, results, fields) => {
+      if (error) {
+        callback(error);
       }
-    );
+
+      results = results.filter(
+        (arr, index, self) =>
+          index === self.findIndex((t) => t.COMPANY_NAME === arr.COMPANY_NAME)
+      );
+      return callback(null, results || null);
+    });
   },
   stockiestFromCompany: (query, city, callback) => {
     //
@@ -73,23 +62,19 @@ module.exports = {
     //
     var queryString = `select * from crossreference where FIRM_NAME LIKE CONCAT(?, '%') and CENTER=?`;
 
-    db.query(
-      queryString,
-      [formatQuery(query), city],
-      (error, results, fields) => {
-        if (error) {
-          callback(error);
-        }
-
-        results = results.length
-          ? results.filter(
-              (arr, index, self) =>
-                index === self.findIndex((t) => t.FIRM_NAME === arr.FIRM_NAME)
-            )
-          : [];
-        return callback(null, results || null);
+    db.query(queryString, [query, city], (error, results, fields) => {
+      if (error) {
+        callback(error);
       }
-    );
+
+      results = results.length
+        ? results.filter(
+            (arr, index, self) =>
+              index === self.findIndex((t) => t.FIRM_NAME === arr.FIRM_NAME)
+          )
+        : [];
+      return callback(null, results || null);
+    });
   },
   companyFromStockiest: (query, city, callback) => {
     //
