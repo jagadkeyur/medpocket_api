@@ -39,7 +39,7 @@ module.exports = {
   },
   companyToStockiest: (query, city, callback) => {
     //
-    var queryString = `select * from crossreference where MATCH(COMPANY_NAME) AGAINST(? IN BOOLEAN MODE) and CENTER=?`;
+    var queryString = `select * from crossreference where MATCH(COMPANY_NAME) AGAINST(? IN BOOLEAN MODE) and CENTER=? GROUP BY COMPANY_NAME`;
 
     db.query(
       queryString,
@@ -71,7 +71,7 @@ module.exports = {
   },
   stockiestToCompany: (query, city, callback) => {
     //
-    var queryString = `select * from crossreference where MATCH(FIRM_NAME) AGAINST(? IN BOOLEAN MODE) and CENTER=?`;
+    var queryString = `select * from crossreference where MATCH(FIRM_NAME) AGAINST(? IN BOOLEAN MODE) and CENTER=? GROUP BY FIRM_NAME`;
 
     db.query(
       queryString,
