@@ -431,21 +431,22 @@ module.exports = {
           // debugger;
           let worksheet = workbook.addWorksheet(worksheetName);
 
-          const newArr = results.map((dt) => {
-            delete dt[excludeColumn];
-            return dt;
-          });
-
-          worksheet.columns = Object.keys(newArr[0]).map((dt) => {
-            return {
-              header: dt,
-              key: dt,
-            };
-          });
-
-          // Add Array Rows
-          worksheet.addRows(results);
-
+          if (results.length) {            
+            const newArr = results.map((dt) => {
+              delete dt[excludeColumn];
+              return dt;
+            });
+  
+            worksheet.columns = Object.keys(newArr[0]).map((dt) => {
+              return {
+                header: dt,
+                key: dt,
+              };
+            });
+  
+            // Add Array Rows
+            worksheet.addRows(results);
+          }
           resolve(workbook);
         }
       });
