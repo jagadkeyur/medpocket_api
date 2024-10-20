@@ -50,6 +50,10 @@ function insertRows(rows, table, isIgnore = false) {
 }
 
 function insertRowsPIS(rows, table) {
+  const chunks = (a, size) =>
+    Array.from(new Array(Math.ceil(a.length / size)), (_, i) =>
+      a.slice(i * size, i * size + size)
+    );
   return new Promise(async (resolve, reject) => {
     const keys = Object.keys(rows[0]);
     var vals = [];
@@ -61,18 +65,41 @@ function insertRowsPIS(rows, table) {
         );
         console.log(`vals (${values.join(",")})`);
         vals.push(`(${values.join(",")})`);
+        // db.query(
+        //   `insert into ${table}(${keys.join(",")}) VALUES(${values.join(",")})`,
+        //   [],
+        //   (error, results, fields) => {
+        //     if (error) reject(error);
+        //   }
+        // );
       })
     );
-    if (vals.length)
-      db.query(
-        `replace into ${table}(${keys.join(",")}) values ${vals.join(",")}`,
-        [],
-        (error, results, fields) => {
-          if (error) reject(error);
-          resolve(results);
-        }
+    if (vals.length) {
+      const someRows = chunks(vals, 5000);
+      await Promise.all(
+        someRows.map(
+          (chunk) =>
+            new Promise((resolve, reject) => {
+              db.query(
+                `replace into ${table}(${keys.join(",")}) values ${chunk.join(
+                  ","
+                )}`,
+                [],
+                (error, results, fields) => {
+                  if (error) reject(error);
+                  // if (results.length) {
+                  console.log(`Inserted ${results.affectedRows} rows`);
+                  // }
+                  resolve(true);
+                }
+              );
+            })
+        )
       );
-    else resolve(null);
+      resolve(true);
+    } else {
+      reject(true);
+    }
   });
 }
 
@@ -431,19 +458,19 @@ module.exports = {
           // debugger;
           let worksheet = workbook.addWorksheet(worksheetName);
 
-          if (results.length) {            
+          if (results.length) {
             const newArr = results.map((dt) => {
               delete dt[excludeColumn];
               return dt;
             });
-  
+
             worksheet.columns = Object.keys(newArr[0]).map((dt) => {
               return {
                 header: dt,
                 key: dt,
               };
             });
-  
+
             // Add Array Rows
             worksheet.addRows(results);
           }
@@ -501,16 +528,12 @@ module.exports = {
     );
   },
   deleteNews: (id, callback) => {
-    db.query(
-      `delete from news where id=?`,
-      [id],
-      (error, results, fields) => {
-        if (error) {
-          callback(error);
-        }
-        return callback(null, results || null);
+    db.query(`delete from news where id=?`, [id], (error, results, fields) => {
+      if (error) {
+        callback(error);
       }
-    );
+      return callback(null, results || null);
+    });
   },
   getGeneralUsers: (callback) => {
     const role = "user";
