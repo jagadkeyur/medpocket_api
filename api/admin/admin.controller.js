@@ -598,7 +598,7 @@ module.exports = {
     try {
       let workbook = new excel.Workbook();
 
-      await downloadData(workbook, "PIS", "products", "ID");
+      await downloadData(workbook, "PIS", "products", "");
 
       // res is a Stream object
       res.setHeader(
