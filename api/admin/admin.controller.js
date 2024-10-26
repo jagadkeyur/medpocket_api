@@ -26,6 +26,8 @@ const {
   getGeneralUsers,
   addGeneralUsers,
   deleteNews,
+  getPIS,
+  deletePIS,
 } = require("./admin.service");
 
 require("dotenv").config();
@@ -142,6 +144,22 @@ module.exports = {
     const { center = null } = req.params || {};
     try {
       getNews(center, async (error, response) => {
+        response = response ? JSON.parse(JSON.stringify(response)) : null;
+        if (response) {
+          res
+            .status(200)
+            .json({ status: 1, message: "success", data: response });
+        } else {
+          res.status(500).json({ status: 0, message: error });
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ status: 0, message: error });
+    }
+  },
+  getPIS: async (req, res) => {
+    try {
+      getPIS(async (error, response) => {
         response = response ? JSON.parse(JSON.stringify(response)) : null;
         if (response) {
           res
@@ -398,8 +416,24 @@ module.exports = {
       res.status(500).json({ status: 0, message: error });
     }
   },
+  deletePIS: async (req, res) => {
+    try {
+      deletePIS(req.params.id, async (error, response) => {
+        response = response ? JSON.parse(JSON.stringify(response)) : null;
+        if (response) {
+          res
+            .status(200)
+            .json({ status: 1, message: "success", data: response });
+        } else {
+          res.status(500).json({ status: 0, message: error });
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ status: 0, message: error });
+    }
+  },
   uploadDataSheet: async (req, res) => {
-    //////debugger;
+    debugger;
     const file = req.files["file"][0];
 
     try {
@@ -417,7 +451,7 @@ module.exports = {
           sheets.map(async (sheet) => {
             switch (sheet) {
               case "CROSSREFERENCE":
-                //////debugger;
+                debugger;
                 let rows = reader.utils.sheet_to_json(
                   excelFile.Sheets["CROSSREFERENCE"],
                   { defval: "" }
@@ -538,7 +572,7 @@ module.exports = {
                   }
                 );
                 rows = filterArray(rows);
-                const ress = await uploadPISData(rows, "generic");
+                const ress = await uploadData(rows, "generic");
                 if (ress) successMessage.push("Generic Uploaded");
                 break;
 

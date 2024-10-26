@@ -185,6 +185,18 @@ module.exports = {
       }
     );
   },
+  getPIS: (callback) => {
+    db.query(
+      `select *,ID as id from products`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          callback(error);
+        }
+        return callback(null, results || null);
+      }
+    );
+  },
   getCenters: (callback) => {
     db.query(`select *,ID as id from centers`, [], (error, results, fields) => {
       if (error) {
@@ -534,6 +546,18 @@ module.exports = {
       }
       return callback(null, results || null);
     });
+  },
+  deletePIS: (id, callback) => {
+    db.query(
+      `delete from products where id=?`,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          callback(error);
+        }
+        return callback(null, results || null);
+      }
+    );
   },
   getGeneralUsers: (callback) => {
     const role = "user";

@@ -28,6 +28,8 @@ const {
   downloadDataSheetGeneric,
   uploadGeneric,
   deleteNews,
+  getPIS,
+  deletePIS,
 } = require("./admin.controller");
 
 const router = require("express").Router();
@@ -101,8 +103,10 @@ router.get("/keys-batch", verifyToken, getKeysBatch);
 router.post("/keys-batch", verifyToken, generateKeysBatch);
 router.delete("/keys-batch/:id", verifyToken, deleteBatch);
 router.get("/news", verifyToken, getNews);
+router.get("/pis", verifyToken, getPIS);
 router.get("/news-by/:center", verifyToken, getNews);
 router.delete("/news/:id", verifyToken, deleteNews);
+router.delete("/pis/:id", verifyToken, deletePIS);
 router.post(
   "/news/add",
   verifyToken,
