@@ -3,7 +3,7 @@ const db = require("../../config/db.config");
 module.exports = {
   searchGeneric: (query, callback) => {
     db.query(
-      `select p.* from generic g LEFT OUTER JOIN products p ON g.generic=p.CONTENT where (g.generic LIKE CONCAT(?, '%'))`,
+      `select p.*,g.generic from generic g LEFT OUTER JOIN products p ON g.generic=p.CONTENT where (g.generic LIKE CONCAT(?, '%'))`,
       [query],
       (error, results, fields) => {
         if (error) {
