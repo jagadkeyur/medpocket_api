@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "medpocket-latest",
+  "private_key_id": "033978693ba18b78b10212e6b984b3fff131d31f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCYqMdjp6MSsJLK\nVU9Wm2nPHBX+tTxKXIGZEbZ2mjXDQCcfikFjKxvTtrSS/LYHMlc5mS1XWg7yBEhT\n6CXXwOEx7rOylURothDj5Qc6YHAmEiY/oCU9aItQDHXTPCkyMShTOfuywJ76CkRD\n6uxYaGD7rihicmdx03FcPBJHtneNmqBqffhOwfEt2rK9eGKCeVm2eRdabynHnnX6\nQQu7BpHjqG0spm9XU/8Gvp3mM2pZjnoa+hxZBCasFaOFmRgsHz3RgEXnJIjGltf/\nDXlsqphdODc+/0kyIvZE16Tfd3eBkj1nfYx/dWYV4YfSviDk9DbRYRdsNE9sm7T9\ngiR1eLLXAgMBAAECggEAOhsb8amQH4AID22TSkLTblqhYJa5QRCe35VnXxNpXU0g\n1xd3tfhlmhsT9lKsMmcN3kWYhYQo5iONKCrXpJys2qWhzlqUdErAeQ3mx2iHp2YH\nGvao1gvh4vErM+DVSV5+m9cZH7vDhya7PyK/HRN1vrZWdspW53N01Yej6ZnhPYtD\n6DwojWsDVtWa8yCweswse+6kn/1ydSG1qnyCusF/a+ERO5ujGyFR04AINrxNBBlr\nqRiuiZYrsZiAJ9vIclSS1/+SEDLHw+b6zIUw+5G0IyojzBFaC6CeXxynFGm+PHJK\nrmt2PJVyNaVwOvcpmVk/0oKA2OHojoeXk+ny2OCXCQKBgQDMuQOMwFYUHADEnwX7\necPL+7k82j7mnZhfdELk90393qHJHOc0O69MpxrmnrrqEYm8Qc89EcAfNiIB7VZg\n40Qj6TVqVpeQhNUWeQZOlRo2kUYr8QVuswabF4EVcI+W2KYQQSZ5afceA9YAGPC0\nPpPygK5uwRMicfGgmhYOGP1uuwKBgQC+5Wqbkas06KCIpTK/a6y+1bfabsMNvdLe\nmcG2f9zNo+AX7emg56YVKbtNYcyYX632tTwTdflGDfrBidpCo5Or/+Rf/C0JGdvL\nkMND1XlA0GgoFCe0nhjQyfxhjG7axwcNgMCBap1G0UgSBSgRZmvUvjI9VAX5sUux\nkJe57ZHAlQKBgQCZcV7Qw2SBRA/rT4nrV/PCU1Ue4DHfJmYLvZdaCGaDjrfShoBg\nrQ+SM3m9O2G7iROkb+sFyeUnP6qzqRFiI1VyWRx5LJgDcRxJ8MIiai0wkyh2TPuW\nYkbkPfS5fhmRpaaqbjqJLDxVWeivQAJCBtlbHMohJ0PRQHgruPIo9OAXewKBgQCn\nobJCNmLPrU/7boXnzlf9pJM0f3tNf9nCm+adqh5tfnB00vkL0R/pCaJuy2jsjWio\ncnH07O4e9Hu0pKdDSX2N1sHm//1UNp7qXY767GTz447zUu+jDgngnt6/kqBuAcRR\nuTRS8Rp3a6QMHvcWgIhEY1ievkAZCfXcUYrLPLF3GQKBgQDJc21QE1gM03x62Z1j\nXys4ISNFuNwXXTwS0e1/6VWBTZM5bzrNs1TSEP5TimRBooLwZbaCglRwchjgtrD7\nwDolO2+igAcJmQ4lcc9lwaIDr4+r5d2PWuRxusuTVnnZ5MatvS0eV8pB6KeRZSp0\nUV9MfD21fOh+1Rn9vAg4zsT6Ig==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-v26cr@medpocket-latest.iam.gserviceaccount.com",
+  "client_id": "110256013797255844417",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-v26cr%40medpocket-latest.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
