@@ -36,6 +36,15 @@ app.use("/api/v1/admin", adminRouter);
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
+const admin = require("firebase-admin");
+
+// Initialize Firebase Admin
+const serviceAccount = require("./config/service-json.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 app.listen(port, "0.0.0.0", () => {
   console.log("app started on port " + port);
 });
