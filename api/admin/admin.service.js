@@ -2,6 +2,7 @@ const FCM = require("fcm-node");
 const db = require("../../config/db.config");
 const { map, omit } = require("lodash");
 var CryptoJS = require("crypto-js");
+const admin = require("firebase-admin");
 
 function cleanUrl(url) {
   return url.replace(/\\/g, "/");
@@ -359,35 +360,63 @@ module.exports = {
       }
     );
   },
-  sendPushNotification: (reg_ids, title, message, callback) => {
-    var fcm = new FCM(process.env.SERVER_KEY || "");
+  sendPushNotification: async (reg_ids, title, body, callback) => {
+    // var fcm = new FCM(process.env.SERVER_KEY || "");
     if (reg_ids.length > 0) {
-      var pushMessage = {
-        //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-        registration_ids: reg_ids,
-        content_available: true,
-        mutable_content: true,
-        notification: {
-          title: title,
-          body: message,
-          icon: "myicon", //Default Icon
-          sound: "mySound", //Default sound
-          // badge: badgeCount, example:1 or 2 or 3 or etc....
-        },
-        // data: {
-        //   notification_type: 5,
-        //   conversation_id:inputs.user_id,
-        // }
-      };
+      // const notifications = reg_ids.map((reg_id) => ({
+      //   notification: {
+      //     title: title,
+      //     body: body,
+      //   },
+      //   token: reg_id,
+      // }));
+      await Promise.all(
+        reg_ids.map(async (reg_id) => {
+          const message = {
+            notification: {
+              title: title,
+              body: body,
+            },
+            token: reg_id, // Device registration token
+          };
 
-      fcm.send(pushMessage, function (err, response) {
-        if (err) {
-          console.log("Something has gone wrong!", err);
-          return callback(err);
-        } else {
-          return callback(null, response);
-        }
-      });
+          try {
+            const response = await admin.messaging().send(message);
+            console.log("Notification sent successfully:", response);
+          } catch (error) {
+            console.error("Error sending notification:", error);
+          }
+        })
+      );
+      return callback(null, null);
+      // var pushMessage = {
+      //   //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+      //   registration_ids: reg_ids,
+      //   content_available: true,
+      //   mutable_content: true,
+      //   notification: {
+      //     title: title,
+      //     body: message,
+      //     icon: "myicon", //Default Icon
+      //     sound: "mySound", //Default sound
+      //     // badge: badgeCount, example:1 or 2 or 3 or etc....
+      //   },
+      //   // data: {
+      //   //   notification_type: 5,
+      //   //   conversation_id:inputs.user_id,
+      //   // }
+      // };
+
+      // fcm.send(pushMessage, function (err, response) {
+      //   if (err) {
+      //     console.log("Something has gone wrong!", err);
+      //     return callback(err);
+      //   } else {
+      //     return callback(null, response);
+      //   }
+      // });
+    } else {
+      return callback(null, null);
     }
   },
   addNews: (data, attachments, callback) => {
@@ -451,7 +480,6 @@ module.exports = {
           // })
           //   );
           await insertRows(data, table);
-          debugger;
           resolve(true);
         }
       });

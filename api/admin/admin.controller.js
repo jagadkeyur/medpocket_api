@@ -433,7 +433,6 @@ module.exports = {
     }
   },
   uploadDataSheet: async (req, res) => {
-    debugger;
     const file = req.files["file"][0];
 
     try {
@@ -451,7 +450,6 @@ module.exports = {
           sheets.map(async (sheet) => {
             switch (sheet) {
               case "CROSSREFERENCE":
-                debugger;
                 let rows = reader.utils.sheet_to_json(
                   excelFile.Sheets["CROSSREFERENCE"],
                   { defval: "" }
@@ -461,7 +459,7 @@ module.exports = {
                 if (ress) successMessage.push("Cross Ref. Uploaded");
                 break;
               case "STOCKIST":
-                //////debugger;
+                // debugger;
                 let rows1 = reader.utils.sheet_to_json(
                   excelFile.Sheets["STOCKIST"],
                   { defval: "", blankrows: false, skipHidden: true }
@@ -471,7 +469,7 @@ module.exports = {
                 if (ress1) successMessage.push("Stockiests Uploaded");
                 break;
               case "CHEMISTS_DRUGGISTS":
-                //////debugger;
+                debugger;
                 let rows2 = reader.utils.sheet_to_json(
                   excelFile.Sheets["CHEMISTS_DRUGGISTS"],
                   { defval: "", blankrows: false, skipHidden: true }
