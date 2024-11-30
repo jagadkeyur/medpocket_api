@@ -104,3 +104,6 @@ dist
 .tern-port
 # Local Netlify folder
 .netlify
+
+
+config/service-json.json
