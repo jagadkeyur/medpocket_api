@@ -11,7 +11,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: 103.180.120.216
+          server: 103.211.202.141
           username: Dev-MedPocket
           password: ${{ secrets.ftp_password }}
           server-dir: prod-api.medpocket.in/
@@ -19,7 +19,7 @@ jobs:
       - name: 📂 Sync files Stage
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: 103.180.120.216
+          server: 103.211.202.141
           username: Dev-MedPocket
           password: ${{ secrets.ftp_password }}
           server-dir: stage-api.medpocket.in/
