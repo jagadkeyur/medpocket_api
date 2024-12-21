@@ -95,10 +95,10 @@ module.exports = {
   getStockiestDetails: (stockiest, city, callback) => {
     //
 
-    var queryString = `select * from chemistsdruggiest where REPLACE(firm_name," ","")=REPLACE(?," ","") AND CITY=?`;
+    var queryString = `select * from chemistsdruggiest where REPLACE(firm_name," ","")=REPLACE('${stockiest}'," ","") AND CITY='${city}'`;
     // var queryString = `select * from stockiests where firm_name LIKE CONCAT(SUBSTRING_INDEX(?,'-',1),'%')`;
 
-    db.query(queryString, [stockiest, city], (error, results, fields) => {
+    db.query(queryString, [], (error, results, fields) => {
       // debugger;
       if (error) {
         callback(error);
@@ -107,7 +107,7 @@ module.exports = {
       if (results.length) {
         return callback(null, results || null);
       } else {
-        var queryString1 = `select * from stockiests where REPLACE(firm_name," ","")=REPLACE(?," ","") AND CITY=?`;
+        var queryString1 = `select * from stockiests where REPLACE(firm_name," ","")=REPLACE('${stockiest}'," ","") AND CITY='${city}'`;
         // var queryString1 = `select * from chemistsdruggiest where firm_name LIKE CONCAT(SUBSTRING_INDEX(?,'-',1),'%')`;
         db.query(queryString1, [stockiest, city], (error, results, fields) => {
           // debugger;
