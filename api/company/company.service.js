@@ -96,7 +96,7 @@ module.exports = {
     //
     var cityStr = "";
 
-    if (city) cityStr = ` AND CITY='${city}'`;
+    if (city) cityStr = ` AND CENTER='${city}'`;
     var queryString = `select * from chemistsdruggiest where REPLACE(firm_name," ","")=REPLACE('${stockiest}'," ","") ${cityStr}`;
     // var queryString = `select * from stockiests where firm_name LIKE CONCAT(SUBSTRING_INDEX(?,'-',1),'%')`;
 
