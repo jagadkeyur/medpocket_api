@@ -32,7 +32,7 @@ module.exports = {
   },
   companyToStockiest: (query, city, callback) => {
     //
-    var queryString = `select * from crossreference where COMPANY_NAME LIKE CONCAT(?, '%') and CITY=?`;
+    var queryString = `select * from crossreference where COMPANY_NAME LIKE CONCAT(?, '%') and CENTER=?`;
 
     db.query(queryString, [query, city], (error, results, fields) => {
       if (error) {
@@ -48,7 +48,7 @@ module.exports = {
   },
   stockiestFromCompany: (query, city, callback) => {
     //
-    var queryString = `SELECT * FROM crossreference WHERE COMPANY_NAME=? and CITY=? GROUP BY FIRM_NAME`;
+    var queryString = `SELECT * FROM crossreference WHERE COMPANY_NAME=? and CENTER=? GROUP BY FIRM_NAME`;
 
     db.query(queryString, [query, city], (error, results, fields) => {
       if (error) {
@@ -60,7 +60,7 @@ module.exports = {
   },
   stockiestToCompany: (query, city, callback) => {
     //
-    var queryString = `select * from crossreference where FIRM_NAME LIKE CONCAT(?, '%') and CITY=?`;
+    var queryString = `select * from crossreference where FIRM_NAME LIKE CONCAT(?, '%') and CENTER=?`;
 
     db.query(queryString, [query, city], (error, results, fields) => {
       if (error) {
