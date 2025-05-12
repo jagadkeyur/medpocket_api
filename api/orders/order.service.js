@@ -5,17 +5,24 @@ module.exports = {
     const orderID = Math.floor(Math.random() * 1000000000);
 
     db.query(
-      `insert into order_details(order_id, user_id, product_id, stockiest_id, quantity) select ?, user_id, product_id, stockiest_id, quantity from cart where user_id=?`,
+      `INSERT INTO order_details(order_id, user_id, product_id, stockiest_id, quantity)
+     SELECT ?, user_id, product_id, stockiest_id, quantity FROM cart WHERE user_id = ?`,
       [orderID, user.id],
       (error, results, fields) => {
         if (!error) {
           db.query(
-            `insert into order_master(order_id,user_id,amount) values(?,?,(select sum(p.MRP * o.quantity) from order_details o left outer join products p on o.product_id=p.id where o.order_id=?))`,
+            `INSERT INTO order_master(order_id, user_id, amount)
+           VALUES (?, ?, (
+             SELECT SUM(CAST(p.MRP AS DECIMAL(10,2)) * o.quantity)
+             FROM order_details o
+             LEFT OUTER JOIN products p ON o.product_id = p.id
+             WHERE o.order_id = ?
+           ))`,
             [orderID, user.id, orderID],
             (error, results, fields) => {
               if (!error) {
                 db.query(
-                  `delete from cart where user_id=?`,
+                  `DELETE FROM cart WHERE user_id = ?`,
                   [user.id],
                   (error, results, fields) => {
                     if (error) {
@@ -24,13 +31,18 @@ module.exports = {
                     return callback(null, results || null);
                   }
                 );
+              } else {
+                callback(error);
               }
             }
           );
+        } else {
+          callback(error);
         }
       }
     );
   },
+
   getOrders: (user, callback) => {
     db.query(
       `select o.*,osm.Desc as txtStatus from order_master o left outer join order_status_master osm on o.status=osm.id where o.user_id=?`,
