@@ -104,6 +104,21 @@ function insertRowsPIS(rows, table) {
   });
 }
 
+function sortJsonArray(jsonArray, column) {
+  return jsonArray.sort(function (a, b) {
+    const valueA = a[column];
+    const valueB = b[column];
+
+    if (typeof valueA === "string" && typeof valueB === "string") {
+      return valueA.localeCompare(valueB);
+    } else if (typeof valueA === "number" && typeof valueB === "number") {
+      return valueA - valueB;
+    } else {
+      return 0;
+    }
+  });
+}
+
 function addslashes(string) {
   if (typeof string === "string" || string instanceof String)
     return string
@@ -203,6 +218,7 @@ module.exports = {
       if (error) {
         callback(error);
       }
+      results = sortJsonArray(results, "center");
       return callback(null, results || null);
     });
   },
