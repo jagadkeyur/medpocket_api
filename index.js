@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -45,6 +45,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
   console.log("app started on port " + port);
 });
