@@ -5,7 +5,20 @@ var bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-// app.use(cors());
+const allowedOrigins = ["https://myadmin.medpocket.in"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // if you're sending cookies or auth headers
+  })
+);
 const port = process.env.PORT || 5001;
 
 app.use(bodyParser.urlencoded({ extended: false }));
