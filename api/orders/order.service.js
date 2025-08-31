@@ -49,7 +49,7 @@ module.exports = {
                               : null;
 
                           sendPushNotification(
-                            [fcmData.userFcmToken],
+                            fcmData ? [fcmData.userFcmToken] : [],
                             "New Order Created For you",
                             `You have received new order #${orderID}`,
                             async (er, response) => {
