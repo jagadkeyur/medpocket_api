@@ -39,16 +39,17 @@ module.exports = {
   },
   getCenters: (callback) => {
     db.query(
-      `select center from centers where isEnabled=1`,
+      `SELECT center FROM centers WHERE isEnabled = 1 ORDER BY center ASC`,
       [],
       (error, results, fields) => {
         if (error) {
-          callback(error);
+          return callback(error);
         }
         return callback(null, results || null);
       }
     );
   },
+
   getCenterAds: (user, callback) => {
     db.query(
       `select ca.* from center_ads ca left outer join centers c on c.ID=ca.center_id where c.center=? `,
