@@ -1,4 +1,4 @@
-const { verifyToken } = require("../../config/hooks");
+const { verifyToken, verifyApiKey } = require("../../config/hooks");
 const {
   searchProduct,
   searchProductByBrand,
@@ -12,6 +12,7 @@ const {
 const router = require("express").Router();
 router.post("/search", verifyToken, searchProduct);
 router.post("/search-by-brand", verifyToken, searchProductByBrand);
+router.post("/external/search-by-brand", verifyApiKey, searchProductByBrand);
 router.post("/external-search-by-brand", searchProductByBrand);
 router.get("/cart", verifyToken, getCart);
 router.delete("/cart/:cartId", verifyToken, deleteCart);
